@@ -248,14 +248,14 @@ body_box(s, [
 # 8 -------------------------------------------------------------------------
 s = new("Results on Simple Grids")
 table(s, [
-    ["Grid", "Goals", "CNF vars", "Max-term\nP / time", "SharpSAT-TD\nP / time", "MC-SAT\nP / time"],
-    ["3×3", "2", "141", "0.50 / 12 s", "0.50 / 16 s", "0.51 / 14 s"],
-    ["4×4", "3", "400", "0.33 / 16 s", "0.37 / 20 s", "0.36 / 33 s"],
-    ["5×5", "4", "812", "0.26 / 35 s", "0.27 / 35 s", "0.25 / 210 s"],
-    ["6×6", "5", "1,557", "0.20 / 30 s", "0.21 / 38 s", "0.19 / 349 s"],
-    ["7×7", "6", "2,436", "0.18 / 40 s", "0.20 / 105 s †", "0.19 / 737 s †"],
-    ["8×8", "7", "4,024", "0.15 / 61 s", "none finished", "none finished"],
-], 1.5, 3.6, [1.3, 1.2, 1.6, 2.5, 2.5, 2.5], size=16)
+    ["Grid", "Goals", "CNF vars", "CNF clauses", "Max-term\nP / time", "SharpSAT-TD\nP / time", "MC-SAT\nP / time"],
+    ["3×3", "2", "141", "818", "0.50 / 12 s", "0.50 / 16 s", "0.51 / 14 s"],
+    ["4×4", "3", "400", "2,609", "0.33 / 16 s", "0.37 / 20 s", "0.36 / 33 s"],
+    ["5×5", "4", "812", "5,621", "0.26 / 35 s", "0.27 / 35 s", "0.25 / 210 s"],
+    ["6×6", "5", "1,557", "11,191", "0.20 / 30 s", "0.21 / 38 s", "0.19 / 349 s"],
+    ["7×7", "6", "2,436", "17,936", "0.18 / 40 s", "0.20 / 105 s †", "0.19 / 737 s †"],
+    ["8×8", "7", "4,024", "30,205", "0.15 / 61 s", "none finished", "none finished"],
+], 1.5, 3.6, [1.0, 0.95, 1.25, 1.5, 2.3, 2.35, 2.35], size=16)
 body_box(s, [
     (0, "P = mean probability given to the true goal (chance = 1 / goals); time = mean per run"),
     (0, "Counting does not scale: † on 7×7, 36 SharpSAT-TD and 2 MC-SAT runs of 144 hit the 20-minute limit; none finished on 8×8"),
@@ -269,14 +269,14 @@ bullets(s.placeholders[1], [
     (0, "Then marginals given *any* observed moves come from one pass over the circuit"),
 ], y=1.5, h=1.2, size=22)
 table(s, [
-    ["Grid", "Horizon", "CNF vars", "Compile time", "Circuit nodes", "Query, 2 obs."],
-    ["3×3", "5", "141", "0.04 s", "44", "0.001 s"],
-    ["5×5", "8.5", "812", "0.09 s", "1,108", "0.007 s"],
-    ["6×6", "10.75", "1,557", "1.4 s", "21,140", "0.017 s"],
-    ["7×7", "12", "2,436", "6.8 s", "82,748", "0.035 s"],
-    ["8×8", "14.75", "4,024", "104 s", "785,660", "0.24 s"],
-    ["9×9", "16", "5,616", "418 s", "2,525,681", "0.45 s"],
-], 2.8, 3.3, [1.3, 1.5, 1.8, 2.3, 2.4, 2.4], size=16)
+    ["Grid", "Horizon", "CNF vars", "CNF clauses", "Compile time", "Circuit nodes", "Query, 2 obs."],
+    ["3×3", "5", "141", "818", "0.04 s", "44", "0.001 s"],
+    ["5×5", "8.5", "812", "5,621", "0.09 s", "1,108", "0.007 s"],
+    ["6×6", "10.75", "1,557", "11,191", "1.4 s", "21,140", "0.017 s"],
+    ["7×7", "12", "2,436", "17,936", "6.8 s", "82,748", "0.035 s"],
+    ["8×8", "14.75", "4,024", "30,205", "104 s", "785,660", "0.24 s"],
+    ["9×9", "16", "5,616", "42,712", "418 s", "2,525,681", "0.45 s"],
+], 2.8, 3.3, [1.1, 1.3, 1.4, 1.6, 1.9, 2.2, 2.2], size=16)
 text(s, "10×10 did not compile within 20 minutes", 6.3, size=20)
 
 # 10 ------------------------------------------------------------------------
@@ -286,15 +286,15 @@ s = new("Results on Two-Package Grids")
 text(s, "One truck, two packages, two possible destinations each; the agent delivers one "
         "package: 4 goals (chance = 0.25), 4 instances per grid, 1 … N−2 observed actions", 1.4, h=0.9, size=20)
 table(s, [
-    ["Grid", "CNF vars", "Max-term\nP / time", "SharpSAT-TD\nP / time", "MC-SAT\nP / time", "d4 compile\ndone · time"],
-    ["3×3", "752", "0.40 / 24 s", "0.46 / 28 s", "0.37 / 85 s", "4 of 4 · 4 s"],
-    ["4×4", "1,893", "0.35 / 35 s", "0.39 / 52 s", "0.31 / 454 s", "4 of 4 · 5 s"],
-    ["5×5", "3,147", "0.39 / 56 s", "0.41 / 67 s", "0.32 / 579 s †", "4 of 4 · 9 s"],
-    ["6×6", "5,797", "0.39 / 103 s", "none finished", "not run", "4 of 4 · 105 s"],
-    ["7×7", "9,925", "0.39 / 355 s", "not run", "not run", "2 of 4 · 207 s"],
-], 2.25, 2.8, [1.1, 1.5, 2.25, 2.25, 2.3, 2.3], size=16)
+    ["Grid", "CNF vars", "CNF clauses", "Max-term\nP / time", "SharpSAT-TD\nP / time", "MC-SAT\nP / time", "d4 compile\ndone · time"],
+    ["3×3", "751", "10,533", "0.40 / 24 s", "0.46 / 28 s", "0.37 / 85 s", "4 of 4 · 4 s"],
+    ["4×4", "1,893", "40,065", "0.35 / 35 s", "0.39 / 52 s", "0.31 / 454 s", "4 of 4 · 5 s"],
+    ["5×5", "3,147", "93,878", "0.39 / 56 s", "0.41 / 67 s", "0.32 / 579 s †", "4 of 4 · 9 s"],
+    ["6×6", "5,797", "234,150", "0.39 / 103 s", "none finished", "not run", "4 of 4 · 105 s"],
+    ["7×7", "9,925", "523,734", "0.39 / 355 s", "not run", "not run", "2 of 4 · 207 s"],
+], 2.25, 2.8, [0.95, 1.2, 1.45, 2.0, 2.0, 2.0, 2.1], size=16)
 body_box(s, [
-    (0, "P = mean probability given to the true goal over finished runs; time = mean per run; 20-minute limit; a method that timed out was not run on larger grids"),
+    (0, "P = mean probability given to the true goal over finished runs; time = mean per run; CNF sizes are means over the 4 problems; 20-minute limit; a method that timed out was not run on larger grids"),
     (0, "Counting stops early: SharpSAT-TD finished none of 8 runs on 6×6; † MC-SAT finished 4 of 16 on 5×5"),
     (0, "Max-term finishes everything, within 0.06 of exact counting, but its top goal is a tie in 216 of 240 runs"),
     (0, "d4 compiles through 6×6; each query then takes ≤ 0.26 s and matches SharpSAT-TD to 2·10⁻¹⁵"),
