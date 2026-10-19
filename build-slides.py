@@ -280,14 +280,35 @@ table(s, [
 text(s, "10×10 did not compile within 20 minutes", 6.3, size=20)
 
 # 10 ------------------------------------------------------------------------
+# CLARA/TwoPackage/results/{runs,compile-d4,query-evidence}.jsonl, last attempt
+# of each run (the 20-minute rerun where there was one); 4 instances per size
+s = new("Results on Two-Package Grids")
+text(s, "One truck, two packages, two possible destinations each; the agent delivers one "
+        "package: 4 goals (chance = 0.25), 4 instances per grid, 1 … N−2 observed actions", 1.4, h=0.9, size=20)
+table(s, [
+    ["Grid", "CNF vars", "Max-term\nP / time", "SharpSAT-TD\nP / time", "MC-SAT\nP / time", "d4 compile\ndone · time"],
+    ["3×3", "752", "0.40 / 24 s", "0.46 / 28 s", "0.37 / 85 s", "4 of 4 · 4 s"],
+    ["4×4", "1,893", "0.35 / 35 s", "0.39 / 52 s", "0.31 / 454 s", "4 of 4 · 5 s"],
+    ["5×5", "3,147", "0.39 / 56 s", "0.41 / 67 s", "0.32 / 579 s †", "4 of 4 · 9 s"],
+    ["6×6", "5,797", "0.39 / 103 s", "none finished", "not run", "4 of 4 · 105 s"],
+    ["7×7", "9,925", "0.39 / 355 s", "not run", "not run", "2 of 4 · 207 s"],
+], 2.25, 2.8, [1.1, 1.5, 2.25, 2.25, 2.3, 2.3], size=16)
+body_box(s, [
+    (0, "P = mean probability given to the true goal over finished runs; time = mean per run; 20-minute limit; a method that timed out was not run on larger grids"),
+    (0, "Counting stops early: SharpSAT-TD finished none of 8 runs on 6×6; † MC-SAT finished 4 of 16 on 5×5"),
+    (0, "Max-term finishes everything, within 0.06 of exact counting, but its top goal is a tie in 216 of 240 runs"),
+    (0, "d4 compiles through 6×6; each query then takes ≤ 0.26 s and matches SharpSAT-TD to 2·10⁻¹⁵"),
+], 5.55, 1.85, size=17)
+
+# 11 ------------------------------------------------------------------------
 s = new("Test Problem Archive")
 bullets(s.placeholders[1], [
     (0, "**GitHub:** github.com/HenryKautz/CLARA"),
     (1, "tools: github.com/HenryKautz/FiFO"),
     (0, "**Problem generator:** ppgen makes problems, planner finds plans, evgen turns plans into observations"),
     (0, "**Simple grid instances:** N×N grids, N = 3 … 10, one truck, several possible destinations"),
-    (0, "**Baseline results:** the tables on the previous two slides"),
-    (0, "**Current work:** harder problems with multiple packages and destinations"),
+    (0, "**Two-package instances:** N×N grids, N = 3 … 7, two packages with two possible destinations each"),
+    (0, "**Baseline results:** the tables on the previous three slides"),
 ], y=1.6, h=5.4, size=28)
 
 prs.save(OUT)
