@@ -301,6 +301,27 @@ body_box(s, [
 ], 5.55, 1.85, size=17)
 
 # 11 ------------------------------------------------------------------------
+# CLARA/AAAI-2010-Benchmarks/results/runs.jsonl (run-benchmarks.py, summarize.py)
+s = new("Results on the Ramírez & Geffner Benchmarks")
+text(s, "Two AAAI-10 recognition problems, 1, 3 or 5 observed actions in order: "
+        "IntrusionDetection (10 goals, horizon 6) and BlockWords (21 goals, horizon 15)", 1.4, h=0.9, size=20)
+table(s, [
+    ["Problem", "Obs.", "CNF vars", "CNF clauses", "Max-term\nP, rank / time", "SharpSAT-TD\nP, rank / time", "d4 compile"],
+    ["Intrusion", "1", "1,056", "2,239", "0.16, tied 1st / 8 s", "0.10, tied 1st / 42 s", "timeout"],
+    ["Intrusion", "3", "1,068", "2,281", "0.37, 1st / 10 s", "0.10, 3rd / 99 s", "timeout"],
+    ["Intrusion", "5", "1,080", "2,323", "0.67, 1st / 10 s", "0.10, 3rd / 49 s", "timeout"],
+    ["BlockWords", "1", "3,681", "240,551", "0.05, tied 1st / 49 s", "timeout", "timeout"],
+    ["BlockWords", "3", "3,711", "240,665", "0.12, 2nd / 61 s", "timeout", "timeout"],
+    ["BlockWords", "5", "3,741", "240,779", "0.31, tied 1st / 60 s", "0.64, 1st / 57 min", "timeout"],
+], 2.15, 3.0, [1.6, 0.8, 1.2, 1.45, 2.4, 2.4, 1.65], size=16)
+body_box(s, [
+    (0, "P = probability given to the true goal, per-goal (Ramírez & Geffner) baseline, uniform priors; 60-minute limit per run"),
+    (0, "d4 compiled none, full or projected; at horizon 5 it compiles Intrusion in 55 s and matches SharpSAT-TD to 6 digits"),
+    (0, "Intrusion: the exact posterior is nearly flat (0.09–0.12): over *all* plans the slack makes the observed recons likely under every goal; max-term sees only the cheapest plan"),
+    (0, "BlockWords, 5 obs.: exact counting picks the true goal (0.64) where max-term ties it with a rival"),
+], 5.55, 1.85, size=16)
+
+# 12 ------------------------------------------------------------------------
 s = new("Test Problem Archive")
 bullets(s.placeholders[1], [
     (0, "**GitHub:** github.com/HenryKautz/CLARA"),
@@ -308,7 +329,8 @@ bullets(s.placeholders[1], [
     (0, "**Problem generator:** ppgen makes problems, planner finds plans, evgen turns plans into observations"),
     (0, "**Simple grid instances:** N×N grids, N = 3 … 10, one truck, several possible destinations"),
     (0, "**Two-package instances:** N×N grids, N = 3 … 7, two packages with two possible destinations each"),
-    (0, "**Baseline results:** the tables on the previous three slides"),
+    (0, "**Ramírez & Geffner benchmarks:** BlockWords and IntrusionDetection (AAAI-10), with theories, weighted CNFs and results"),
+    (0, "**Baseline results:** the tables on the previous four slides"),
 ], y=1.6, h=5.4, size=28)
 
 prs.save(OUT)
